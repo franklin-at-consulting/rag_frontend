@@ -96,8 +96,11 @@ const ShowResults = ({ data }) => {
   return (
     <div className="max-w-3xl mx-auto p-4">
       <h2 className="text-xl font-bold mb-4">Response</h2>
-      <p className="mb-4">{data.response}</p>
-
+      <div
+        className="prose prose-indigo mb-6"
+        dangerouslySetInnerHTML={{ __html: data.response }}
+      />
+      
       <h3 className="text-lg font-semibold mb-2">Sources</h3>
       <ul>
         {data.sources.map((source, index) => (
