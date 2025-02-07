@@ -54,7 +54,7 @@ const UploadDocument = ({ onClose }) => {
         {/* Title */}
         <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4 flex items-center">
           <ArrowUpTrayIcon className="w-6 h-6 mr-2 text-blue-600" />
-          Upload Document
+          Upload Source
         </h2>
 
         {/* File Input */}

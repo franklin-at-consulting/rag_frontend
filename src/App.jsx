@@ -58,7 +58,7 @@ function App() {
 
   return (
     <div className="app flex flex-col h-screen">
-      <Header />
+      <Header role={role} />
 
       {/* Main content container */}
       <div className="flex flex-grow w-full space-x-4 rounded-xl mb-1">

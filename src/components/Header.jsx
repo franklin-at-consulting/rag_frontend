@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/digger.png"; // Your logo image
 import About from "./About";
+
 import {
   PlusCircleIcon,
   PencilIcon,
@@ -13,7 +14,7 @@ import {
   CircleStackIcon,
 } from "@heroicons/react/24/outline";
 
-export function Header() {
+export function Header({ role }) {
   const [menuVisible, setMenuVisible] = useState(false);
   const [showAboutPopup, setShowAboutPopup] = useState(false);
   const [adminMenuVisible, setAdminMenuVisible] = useState(false);
@@ -67,44 +68,45 @@ export function Header() {
         {menuVisible && (
           <div className="absolute top-10 right-10 bg-white divide-y divide-gray-200 rounded-sm shadow-lg w-48 z-10">
             <ul className="py-1 text-sm text-gray-700 cursor-pointer">
-              
+
               {/* Admin Users - Hover to Show Submenu */}
-              <li 
-                className="px-4 py-1 hover:bg-gray-100 flex items-center space-x-2 rounded-sm relative"
-                onMouseEnter={() => setAdminMenuVisible(true)}
-                onMouseLeave={() => setAdminMenuVisible(false)}
-              >
-                <UsersIcon className="w-5 h-5" />
-                <span>Admin Users</span>
+              {role === "admin" && (
+                <li
+                  className="px-4 py-1 hover:bg-gray-100 flex items-center space-x-2 rounded-sm relative"
+                  onMouseEnter={() => setAdminMenuVisible(true)}
+                  onMouseLeave={() => setAdminMenuVisible(false)}
+                >
+                  <UsersIcon className="w-5 h-5" />
+                  <span>Admin Users</span>
 
-                {/* Secondary Dropdown Menu - Appears on Hover */}
-                {adminMenuVisible && (
-                  <div className="absolute right-48 top-0 bg-white shadow-lg w-40 rounded-sm">
-                    <ul className="text-sm text-gray-700">
-                      <li className="flex items-center px-4 py-2 hover:bg-gray-100 rounded-sm cursor-pointer">
-                        <PlusCircleIcon className="w-4 h-4 mr-2" />
-                        <span>Create User</span>
-                      </li>
-                      <li className="flex items-center px-4 py-2 hover:bg-gray-100 rounded-sm cursor-pointer">
-                        <CircleStackIcon className="w-4 h-4 mr-2" />
-                        <span>View Users</span>
-                      </li>
-                      <li className="flex items-center px-4 py-2 hover:bg-gray-100 rounded-sm cursor-pointer">
-                        <PencilIcon className="w-4 h-4 mr-2" />
-                        <span>Update User</span>
-                      </li>
-                      <li className="flex items-center px-4 py-2 hover:bg-gray-100 rounded-sm cursor-pointer">
-                        <TrashIcon className="w-4 h-4 mr-2" />
-                        <span>Delete User</span>
-                      </li>
-                    </ul>
-                  </div>
-                )}
-              </li>
-
+                  {/* Secondary Dropdown Menu - Appears on Hover */}
+                  {adminMenuVisible && (
+                    <div className="absolute right-48 top-0 bg-white shadow-lg w-40 rounded-sm">
+                      <ul className="text-sm text-gray-700">
+                        <li className="flex items-center px-4 py-2 hover:bg-gray-100 rounded-sm cursor-pointer">
+                          <PlusCircleIcon className="w-4 h-4 mr-2" />
+                          <span>Create User</span>
+                        </li>
+                        <li className="flex items-center px-4 py-2 hover:bg-gray-100 rounded-sm cursor-pointer">
+                          <CircleStackIcon className="w-4 h-4 mr-2" />
+                          <span>View Users</span>
+                        </li>
+                        <li className="flex items-center px-4 py-2 hover:bg-gray-100 rounded-sm cursor-pointer">
+                          <PencilIcon className="w-4 h-4 mr-2" />
+                          <span>Update User</span>
+                        </li>
+                        <li className="flex items-center px-4 py-2 hover:bg-gray-100 rounded-sm cursor-pointer">
+                          <TrashIcon className="w-4 h-4 mr-2" />
+                          <span>Delete User</span>
+                        </li>
+                      </ul>
+                    </div>
+                  )}
+                </li>
+              )}
               {/* About */}
-              <li 
-                onClick={toggleAboutPopup} 
+              <li
+                onClick={toggleAboutPopup}
                 className="px-4 py-1 hover:bg-gray-100 flex items-center rounded-sm space-x-2"
               >
                 <InformationCircleIcon className="w-5 h-5" />
@@ -112,8 +114,8 @@ export function Header() {
               </li>
 
               {/* Logout */}
-              <li 
-                onClick={handleLogout} 
+              <li
+                onClick={handleLogout}
                 className="px-4 py-1 hover:bg-gray-100 flex items-center rounded-sm space-x-2"
               >
                 <ArrowLeftStartOnRectangleIcon className="w-5 h-5" />
