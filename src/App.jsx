@@ -64,13 +64,13 @@ function App() {
       <div className="flex flex-grow w-full space-x-4 rounded-xl mb-1">
 
         {/* Left Sidebar (for sources or additional content) */}
-        <div className="w-1/4 bg-gray-100 p-4 rounded-xl ">
+        <div className="w-1/4 bg-gray-50 p-4 rounded-xl ">
           <h2 className="text-xs mb-6">Sources</h2>
           <hr className="border-t-2 border-gray-300 mb-4" />
           {role === "admin" && (             
               <button
                 onClick={toggleUploadPopup}
-                className="center-button  flex items-center"
+                className="center-button hover:bg-gray-200 hover:shadow-md flex items-center"
               >
                 <PlusCircleIcon className="w-5 h-5 mr-1" />
                 <a href="#">Add Source</a>
@@ -82,7 +82,7 @@ function App() {
         </div>
 
         {/* Middle Section (for displaying results) */}
-        <div className="flex-1 p-4 bg-white overflow-y-auto rounded-xl shadow-md flex flex-col">
+        <div className="flex-1 p-4 bg-gray-50 overflow-y-auto rounded-xl shadow-md flex flex-col">
           <h2 className="text-xs mb-6">Results</h2>
           <hr className="border-t-2 border-gray-300 mb-4" />
 

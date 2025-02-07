@@ -67,7 +67,7 @@ header .user-options .menu {
   display: none;
   position: absolute;
   right: 0;
-  top: 48px;
+  top: 10px;
   background-color: #CBD5E1;
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -112,5 +112,5 @@ header .user-options .menu li a {
   margin-right: auto;
   width: 100%; /* Ensures button takes up just enough space */
   border-radius: 0.9rem;  
-  border:1px solid black;  
+  border:1px solid #d1d5db;  
 }
