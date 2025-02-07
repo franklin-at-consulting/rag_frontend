@@ -71,11 +71,11 @@ export function Header() {
             } bg-white divide-y divide-gray-700 rounded-lg shadow w-48 absolute top-16 right-10 mt-2 z-10`}
         >
           <ul className="py-1 text-sm cursor-pointer text-gray-700">
-            <li onClick={toggleAboutPopup} className="block px-4 py-1 hover:bg-gray-100 flex items-center space-x-2">              
+            <li onClick={toggleAboutPopup} className="px-4 py-1 hover:bg-gray-100 flex items-center space-x-2">              
               <InformationCircleIcon className="w-5 h-5 mr-2" /> 
               <a href="#">About</a>
             </li>             
-            <li onClick={handleLogout} className="block px-4 py-1 hover:bg-gray-100 flex items-center space-x-2">
+            <li onClick={handleLogout} className="px-4 py-1 hover:bg-gray-100 flex items-center space-x-2">
               <ArrowLeftStartOnRectangleIcon className="w-5 h-5 mr-2" />
               <a href="#">Logout</a>
             </li>            
