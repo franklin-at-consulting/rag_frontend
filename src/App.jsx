@@ -121,7 +121,7 @@ function App() {
           <h2 className="text-xs mb-6">Options</h2>
           <hr className="border-t-2 border-gray-300 mb-4" />
           <div>
-
+              {/*put the content here*/}
           </div>
         </div>
       </div>

@@ -1,31 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/digger.png"; // Your logo image
-import UploadDocument from "./UploadDocument";
 import About from "./About";
-import{
+import {
   PlusCircleIcon,
-  MinusCircleIcon,
-  NoSymbolIcon,
-  UserPlusIcon,
   PencilIcon,
   TrashIcon,
-  DocumentArrowUpIcon,  
-  ArrowLeftStartOnRectangleIcon,
+  UsersIcon,
   InformationCircleIcon,
+  ArrowLeftStartOnRectangleIcon,
   Bars4Icon,
-  CircleStackIcon,  
-}from "@heroicons/react/24/outline";
+  CircleStackIcon,
+} from "@heroicons/react/24/outline";
 
 export function Header() {
-  const [menuVisible, setMenuVisible] = useState(false);  
+  const [menuVisible, setMenuVisible] = useState(false);
   const [showAboutPopup, setShowAboutPopup] = useState(false);
-  
+  const [adminMenuVisible, setAdminMenuVisible] = useState(false);
   const navigate = useNavigate();
-  
+
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
-  }; 
+    if (!menuVisible) setAdminMenuVisible(false); // Close admin menu when closing main menu
+  };
 
   const toggleAboutPopup = () => {
     setShowAboutPopup(!showAboutPopup);
@@ -53,36 +50,80 @@ export function Header() {
   };
 
   return (
-    <header className="flex justify-between pr-4 pb-3 pt-3">
-      {/* Logo and App Name */}
+    <header className="flex justify-between pr-4 pb-3 pt-3 relative">
+      {/* Logo and App Name on the Left */}
       <div className="flex items-center space-x-2">
         <img src={logo} alt="App Logo" className="w-8 h-8" />
-        <h1 className="text-1xl text-gray-800">Packos Digger RAG App</h1>
+        <h1 className="text-xl text-gray-800">Packos Digger RAG App</h1>
       </div>
 
-      {/* User Options */}
-      <div className="flex items-center space-x-4">
-        <button onClick={toggleMenu} className="relative">
-          <Bars4Icon className="w-5 h-5 mr-2" />
+      {/* User Options on the Right */}
+      <div className="relative flex items-center space-x-4">
+        <button onClick={toggleMenu} className="p-2 focus:outline-none">
+          <Bars4Icon className="w-6 h-6 text-gray-700" />
         </button>
-        <div
-          id="dropdownDots"
-          className={`${menuVisible ? "" : "hidden"
-            } bg-white divide-y divide-gray-700 rounded-lg shadow w-48 absolute top-10 right-10 mt-2 z-10`}
-        >
-          <ul className="py-1 text-sm cursor-pointer text-gray-700">
-            <li onClick={toggleAboutPopup} className="px-4 py-1 hover:bg-gray-100 flex items-center space-x-2">              
-              <InformationCircleIcon className="w-5 h-5 mr-2" /> 
-              <a href="#">About</a>
-            </li>             
-            <li onClick={handleLogout} className="px-4 py-1 hover:bg-gray-100 flex items-center space-x-2">
-              <ArrowLeftStartOnRectangleIcon className="w-5 h-5 mr-2" />
-              <a href="#">Logout</a>
-            </li>            
-          </ul>
-        </div>
+
+        {/* Main Dropdown Menu */}
+        {menuVisible && (
+          <div className="absolute top-10 right-10 bg-white divide-y divide-gray-200 rounded-sm shadow-lg w-48 z-10">
+            <ul className="py-1 text-sm text-gray-700 cursor-pointer">
+              
+              {/* Admin Users - Hover to Show Submenu */}
+              <li 
+                className="px-4 py-1 hover:bg-gray-100 flex items-center space-x-2 rounded-sm relative"
+                onMouseEnter={() => setAdminMenuVisible(true)}
+                onMouseLeave={() => setAdminMenuVisible(false)}
+              >
+                <UsersIcon className="w-5 h-5" />
+                <span>Admin Users</span>
+
+                {/* Secondary Dropdown Menu - Appears on Hover */}
+                {adminMenuVisible && (
+                  <div className="absolute right-48 top-0 bg-white shadow-lg w-40 rounded-sm">
+                    <ul className="text-sm text-gray-700">
+                      <li className="flex items-center px-4 py-2 hover:bg-gray-100 rounded-sm cursor-pointer">
+                        <PlusCircleIcon className="w-4 h-4 mr-2" />
+                        <span>Create User</span>
+                      </li>
+                      <li className="flex items-center px-4 py-2 hover:bg-gray-100 rounded-sm cursor-pointer">
+                        <CircleStackIcon className="w-4 h-4 mr-2" />
+                        <span>View Users</span>
+                      </li>
+                      <li className="flex items-center px-4 py-2 hover:bg-gray-100 rounded-sm cursor-pointer">
+                        <PencilIcon className="w-4 h-4 mr-2" />
+                        <span>Update User</span>
+                      </li>
+                      <li className="flex items-center px-4 py-2 hover:bg-gray-100 rounded-sm cursor-pointer">
+                        <TrashIcon className="w-4 h-4 mr-2" />
+                        <span>Delete User</span>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </li>
+
+              {/* About */}
+              <li 
+                onClick={toggleAboutPopup} 
+                className="px-4 py-1 hover:bg-gray-100 flex items-center rounded-sm space-x-2"
+              >
+                <InformationCircleIcon className="w-5 h-5" />
+                <span>About</span>
+              </li>
+
+              {/* Logout */}
+              <li 
+                onClick={handleLogout} 
+                className="px-4 py-1 hover:bg-gray-100 flex items-center rounded-sm space-x-2"
+              >
+                <ArrowLeftStartOnRectangleIcon className="w-5 h-5" />
+                <span>Logout</span>
+              </li>
+            </ul>
+          </div>
+        )}
       </div>
-            
+
       {showAboutPopup && <About onClose={toggleAboutPopup} />}
     </header>
   );
