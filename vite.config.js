@@ -5,4 +5,3 @@ import react from '@vitejs/plugin-react-swc'
 export default defineConfig({
   plugins: [react()],
 })
->>>>>>> 0c793ad (4.0 version)
