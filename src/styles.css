@@ -114,3 +114,45 @@ header .user-options .menu li a {
   border-radius: 0.9rem;  
   border:1px solid #d1d5db;  
 }
+
+/*Use for show CRUD modals */
+
+body.modal-open {
+  overflow: hidden;
+}
+
+/* Custom CSS for fade-in and fade-out animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+.modal-enter {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.modal-exit {
+  animation: fadeOut 0.5s ease-in forwards;
+}
+
+.modal-hidden {
+  display: none;
+}
+

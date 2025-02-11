@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/digger.png"; // Your logo image
 import About from "./About";
+import CreateUser from "./CreateUser";
 
 import {
   PlusCircleIcon,
@@ -18,7 +19,11 @@ export function Header({ role }) {
   const [menuVisible, setMenuVisible] = useState(false);
   const [showAboutPopup, setShowAboutPopup] = useState(false);
   const [adminMenuVisible, setAdminMenuVisible] = useState(false);
-  const navigate = useNavigate();
+  const [isCreateUserOpen, setIsCreateUserOpen] = useState(false);
+  const [isUpdateUserOpen, setIsUpdateUserOpen] = useState(false);
+  const [isDeleteUserOpen, setIsDeleteUserOpen] = useState(false);
+
+  const navigate = useNavigate(); 
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
@@ -50,12 +55,34 @@ export function Header({ role }) {
     }
   };
 
+  //Handle CRUD OPtions
+
+  const handleAddOption = () => {
+    setIsCreateUserOpen(true);
+    document.body.classList.add("modal-open");    
+  };
+
+  const handleUpdateOption = () => {
+    setIsUpdateUserOpen(true);
+    document.body.classList.add("modal-open");    
+  };
+
+  const handleDeleteOption = () => {
+    setIsDeleteUserOpen(true);
+    document.body.classList.add("modal-open");    
+  };
+
+  const handleCloseModal = (setModalState) => {
+    setModalState(false);
+    document.body.classList.remove("modal-open");
+  };
+
   return (
     <header className="flex justify-between pr-4 pb-3 pt-3 relative">
       {/* Logo and App Name on the Left */}
       <div className="flex items-center space-x-2">
         <img src={logo} alt="App Logo" className="w-8 h-8" />
-        <h1 className="text-xl text-gray-800">Packos Digger RAG App</h1>
+        <h1 className="text-xl text-gray-800">RAG Document Aplication</h1>
       </div>
 
       {/* User Options on the Right */}
@@ -83,7 +110,7 @@ export function Header({ role }) {
                   {adminMenuVisible && (
                     <div className="absolute right-48 top-0 bg-white shadow-lg w-40 rounded-sm">
                       <ul className="text-sm text-gray-700">
-                        <li className="flex items-center px-4 py-2 hover:bg-gray-100 rounded-sm cursor-pointer">
+                        <li onClick={handleAddOption} className="flex items-center px-4 py-2 hover:bg-gray-100 rounded-sm cursor-pointer">
                           <PlusCircleIcon className="w-4 h-4 mr-2" />
                           <span>Create User</span>
                         </li>
@@ -127,6 +154,18 @@ export function Header({ role }) {
       </div>
 
       {showAboutPopup && <About onClose={toggleAboutPopup} />}
+
+      {/* Render Admin Users Logic Modals */}
+      {isCreateUserOpen && (
+        <CreateUser onClose={() => handleCloseModal(setIsCreateUserOpen)} />
+      )}
+      {isUpdateUserOpen && (
+        <UpdateUser onClose={() => handleCloseModal(setIsUpdateUserOpen)} />
+      )}
+      {isDeleteUserOpen && (
+        <DeleteUser onClose={() => handleCloseModal(setIsDeleteUserOpen)} />
+      )}
+      
     </header>
   );
 }
