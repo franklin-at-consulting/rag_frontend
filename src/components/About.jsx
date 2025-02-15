@@ -7,14 +7,14 @@ function About({onClose}) {
         <div className="text-center mb-6">
           <img src={logo} alt="App Icon" className="w-16 h-16 mx-auto mb-4" />
           <h2 className="text-2xl font-bold text-gray-900 dark:text-black">
-            About Packo's Digger
+            About RAGDA
           </h2>
         </div>
         <div className="text-gray-700 dark:text-gray-900 mb-6">
           <p className="mb-4">
-            Packos Digger is a powerful tool designed to scrape and extract
+            RAG Document Aplication is a powerful tool designed to scrape and extract
             valuable information from various documents. Whether you need to
-            gather data from PDFs, Word documents, or web pages, Packos Digger
+            gather data from PDFs, Word documents, or web pages, RAGDA
             simplifies the process with just a few clicks.
           </p>
           <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-900 mb-2">
@@ -23,14 +23,14 @@ function About({onClose}) {
           <ul className="list-disc list-inside mb-4">
             <li>Upload your document using our intuitive interface.</li>
             <li>Select the specific data points you want to extract.</li>
-            <li>Click the "Dig Up" button to retrieve the information.</li>
+            <li>Click the "Arrow" button to retrieve the information.</li>
           </ul>
           <h3 className="text-xl font-semibold text-gray-900 dark:text-gary-900 mb-2">
             Expected Results
           </h3>
           <ul className="list-disc list-inside">
             <li>Accurate data extraction from your documents.</li>
-            <li>Easy-to-read results in various formats (CSV, JSON, etc.).</li>
+            <li>Easy-to-read results.</li>
             <li>Time-saving automation for data collection tasks.</li>
           </ul>
         </div>

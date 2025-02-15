@@ -45,7 +45,7 @@ const SearchBar = ({ onSearch }) => {
           type="search"
           id="default-search"
           className="block w-full p-4 pr-20 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="Make a consult here..."
+          placeholder="Make a query here..."
           required
           onKeyDown={handleKeyDown}
           onChange={(e) => setSearchTerm(e.target.value)} // Updates search term

@@ -4,10 +4,32 @@ import { XMarkIcon, ArrowUpTrayIcon } from "@heroicons/react/24/outline";
 const UploadDocument = ({ onClose }) => {
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState({ text: "", type: "" });
+  const [dragActive, setDragActive] = useState(false);
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
-    setMessage({ text: "", type: "" }); // Clear any previous message
+    setMessage({ text: "", type: "" }); // Clear previous message
+  };
+
+  // Handles drag-over event to prevent default behavior
+  const handleDragOver = (event) => {
+    event.preventDefault();
+    setDragActive(true);
+  };
+
+  // Handles drag leave event
+  const handleDragLeave = () => {
+    setDragActive(false);
+  };
+
+  // Handles file drop
+  const handleDrop = (event) => {
+    event.preventDefault();
+    setDragActive(false);
+
+    if (event.dataTransfer.files.length > 0) {
+      setFile(event.dataTransfer.files[0]);
+    }
   };
 
   const uploadDocument = async () => {
@@ -28,10 +50,10 @@ const UploadDocument = ({ onClose }) => {
       const data = await response.json();
 
       if (data.success) {
-        setMessage({ text: data.message, type: "success" });
+        setMessage({ text: "File uploaded successfully!", type: "success" });
         setFile(null);
       } else {
-        setMessage({ text: data.message, type: "error" });
+        setMessage({ text: "Upload failed. Please try again.", type: "error" });
       }
     } catch (error) {
       console.error("Error:", error);
@@ -54,11 +76,17 @@ const UploadDocument = ({ onClose }) => {
         {/* Title */}
         <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4 flex items-center">
           <ArrowUpTrayIcon className="w-6 h-6 mr-2 text-blue-600" />
-          Upload Source
+          Upload Document
         </h2>
 
-        {/* File Input */}
-        <div className="flex flex-col items-center p-4 border-2 border-dashed border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-800">
+        {/* Drag & Drop Area */}
+        <div
+          className={`flex flex-col items-center justify-center p-6 border-2 border-dashed ${dragActive ? "border-blue-500 bg-blue-100" : "border-gray-300 bg-gray-50"
+            } rounded-lg dark:bg-gray-800`}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
           <input
             type="file"
             id="file_input"
@@ -69,7 +97,7 @@ const UploadDocument = ({ onClose }) => {
             htmlFor="file_input"
             className="cursor-pointer text-gray-600 dark:text-gray-300 text-sm font-medium hover:underline"
           >
-            Click to select a file
+            Drag & Drop a file here or <span className="text-blue-600">click to select</span>
           </label>
           {file && (
             <p

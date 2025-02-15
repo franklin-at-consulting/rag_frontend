@@ -1,12 +1,12 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Header } from "./components/Header";
 import SearchBar from "./components/SearchBar";
 import ShowResults from "./components/ShowResults";
 import UploadDocument from './components/UploadDocument';
-import{
-  PlusCircleIcon,  
-}from "@heroicons/react/24/outline";
+import {
+  PlusCircleIcon,
+} from "@heroicons/react/24/outline";
 
 function App() {
   const [results, setResults] = useState(null);
@@ -57,35 +57,33 @@ function App() {
   };
 
   return (
-    <div className="app flex flex-col h-screen">
+    <div className="app flex flex-col h-screen overflow-hidden">
       <Header role={role} />
 
       {/* Main content container */}
-      <div className="flex flex-grow w-full space-x-4 rounded-xl mb-1">
+      <div className="flex flex-grow w-full space-x-4 rounded-xl mb-4 pb-1 overflow-hidden">
 
-        {/* Left Sidebar (for sources or additional content) */}
-        <div className="w-1/4 bg-gray-50 p-4 rounded-xl ">
-          <h2 className="text-xs mb-6">Sources</h2>
+        {/* Left Sidebar */}
+        <div className="w-1/4 bg-gray-50 p-4 rounded-xl shadow-md">
+          <h2 className="text-lg mb-6">Sources</h2>
           <hr className="border-t-2 border-gray-300 mb-4" />
-          {role === "admin" && (             
-              <button
-                onClick={toggleUploadPopup}
-                className="center-button hover:bg-gray-200 hover:shadow-md flex items-center"
-              >
-                <PlusCircleIcon className="w-5 h-5 mr-1" />
-                <a href="#">Add Source</a>
-              </button>            
+          {role === "admin" && (
+            <button
+              onClick={toggleUploadPopup}
+              className="center-button hover:bg-gray-200 hover:shadow-md flex items-center"
+            >
+              <PlusCircleIcon className="w-5 h-5 mr-1" />
+              <a href="#">Add Source</a>
+            </button>
           )}
-          <div>
-
-          </div>
         </div>
 
-        {/* Middle Section (for displaying results) */}
-        <div className="flex-1 p-4 bg-gray-50 overflow-y-auto rounded-xl shadow-md flex flex-col">
-          <h2 className="text-xs mb-6">Results</h2>
+        {/* Middle Section */}
+        <div className="flex-1 p-4 bg-gray-50 rounded-xl shadow-md flex flex-col overflow-hidden">
+          <h2 className="text-lg mb-6">Results</h2>
           <hr className="border-t-2 border-gray-300 mb-4" />
 
+          {/* Loader */}
           {loading && (
             <div className="flex justify-center items-center mt-6">
               <div className="border-t-4 border-blue-500 border-solid rounded-full w-16 h-16 animate-spin"></div>
@@ -93,42 +91,47 @@ function App() {
             </div>
           )}
           {error && (
-            <p className="text-red-500 flex justify-center items-center mt-6">{`Can't Obtain The Information: ${error}`}</p>
+            <p className="text-red-500 flex justify-center items-center mt-6">
+              {`Can't Obtain The Information: ${error}`}
+            </p>
           )}
 
-           {/* Content Area for ShowResults */}
-           <div id="results-container" className="mt-6 flex-grow">
+          {/* Content Area for ShowResults */}
+          <div
+            id="results-container"
+            className="mt-6 flex-grow overflow-y-auto scrollbar-hide"
+          >
             {results ? (
               <ShowResults data={results} />
             ) : (
               !loading && !error && (
                 <div className="text-center mt-6 text-gray-500">
-                  <h3 className="text-xl">Welcome to the Digger RAG App!</h3>
-                  <p>Start by entering a query in the search bar to explore your documents.</p>
+                  <h3 className="text-xl">Welcome to the RAG Documents App!</h3>
+                  <p>Start by entering a query in the search box to explore your documents.</p>
                 </div>
               )
             )}
           </div>
 
-          {/* SearchBar to make the query */}
+          {/* SearchBar */}
           <div className="w-full pt-3 rounded-xl mt-4 self-end">
             <SearchBar onSearch={handleSearch} />
           </div>
         </div>
 
-        {/* Right Sidebar (for notes, other controls, etc.) */}
-        <div className="w-1/4 bg-gray-50 p-4 rounded-xl">
-          <h2 className="text-xs mb-6">Options</h2>
+        {/* Right Sidebar */}
+        <div className="w-1/4 bg-gray-50 p-4 rounded-xl shadow-md">
+          <h2 className="text-lg mb-6">Options</h2>
           <hr className="border-t-2 border-gray-300 mb-4" />
           <div>
-              {/*put the content here*/}
+            {/* Put additional content here */}
           </div>
         </div>
       </div>
 
       {showUploadPopup && <UploadDocument onClose={toggleUploadPopup} />}
+    </div>
 
-    </div>  
   );
 }
 

@@ -104,7 +104,7 @@ export function Header({ role }) {
                   onMouseLeave={() => setAdminMenuVisible(false)}
                 >
                   <UsersIcon className="w-5 h-5" />
-                  <span>Admin Users</span>
+                  <span>User Management</span>
 
                   {/* Secondary Dropdown Menu - Appears on Hover */}
                   {adminMenuVisible && (
