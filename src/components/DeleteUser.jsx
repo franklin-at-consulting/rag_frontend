@@ -54,7 +54,7 @@ const DeleteUser = ({ onClose }) => {
 
         {/* Title */}
         <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-6 text-center">
-          Create New User
+          User Deletion
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
