@@ -70,7 +70,7 @@ function App() {
           {role === "admin" && (
             <button
               onClick={toggleUploadPopup}
-              className="center-button hover:bg-gray-200 hover:shadow-md flex items-center"
+              className="center-button hover:bg-gray-200 hover:shadow-md flex items-center p-2"
             >
               <PlusCircleIcon className="w-5 h-5 mr-1" />
               <a href="#">Add Source</a>

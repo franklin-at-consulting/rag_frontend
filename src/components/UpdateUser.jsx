@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { XMarkIcon, UserIcon, LockClosedIcon, ShieldCheckIcon, EnvelopeIcon } from "@heroicons/react/24/outline";
 
 const UpdateUser = ({ onClose }) => {
   const [email, setEmail] = useState("");
@@ -8,7 +9,7 @@ const UpdateUser = ({ onClose }) => {
   // Handle form submission to update the user's password
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Check if the passwords match
     if (newPassword !== confirmPassword) {
       alert("Passwords do not match. Please try again.");
@@ -49,38 +50,57 @@ const UpdateUser = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
-      <div className="bg-white shadow-lg rounded-lg w-96 relative p-6 z-50">
-        <h2 className="text-center text-2xl font-bold mb-4">Update User Password</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">            
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50">
+      <div className="bg-white dark:bg-gray-900 shadow-lg rounded-lg w-96 p-6 relative transform transition-all duration-300 scale-100">
+
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 text-gray-500 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-all"
+        >
+          <XMarkIcon className="w-6 h-6" />
+        </button>
+
+        {/* Title */}
+        <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-6 text-center">
+          Password Change
+        </h2>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+
+          {/* Username Input */}
+          <div className="relative">
+            <UserIcon className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
             <input
               type="email"
               placeholder="Email"
               id="email"
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none dark:bg-gray-800 dark:text-white"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
-          <div className="mb-4">            
+          <div className="relative">
+            <LockClosedIcon className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
             <input
               type="password"
               id="newPassword"
               placeholder="Password"
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none dark:bg-gray-800 dark:text-white"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               required
             />
           </div>
-          <div className="mb-4">            
+          <div className="relative">
+            <LockClosedIcon className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
             <input
               type="password"
               placeholder="Confirm Password"
               id="confirmPassword"
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none dark:bg-gray-800 dark:text-white"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
@@ -89,14 +109,14 @@ const UpdateUser = ({ onClose }) => {
           <div className="flex justify-between items-center">
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all focus:ring-2 focus:ring-blue-500"
             >
               Update Password
             </button>
             <button
               type="button"
               onClick={onClose}
-              className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+              className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-all focus:ring-2 focus:ring-red-400"
             >
               Cancel
             </button>

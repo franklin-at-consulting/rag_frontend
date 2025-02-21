@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import {  
+  TrashIcon,
+  XMarkIcon, 
+} from "@heroicons/react/24/outline";
 
 const DeleteUser = ({ onClose }) => {
   const [email, setEmail] = useState("");
@@ -7,7 +11,7 @@ const DeleteUser = ({ onClose }) => {
   // Handle form submission to delete the user
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!isConfirmed) {
       alert("Please confirm the deletion by checking the box.");
       return;
@@ -22,17 +26,6 @@ const DeleteUser = ({ onClose }) => {
         },
         body: JSON.stringify({ email }), // Send email to the backend for deletion
       });
-      /*
-      if (!response.ok) {
-        if (response.status === 401) {
-          // Handle unauthorized access (e.g., redirect to login)
-          //console.log("Unauthorized access, redirecting to login.");
-          //alert("Unauthorized access, redirecting to login.")
-          navigate("/open-imb");
-        }
-        throw new Error('Network response was not ok');
-      }
-      */
 
       const data = await response.json();
       if (response.ok) {
@@ -50,14 +43,28 @@ const DeleteUser = ({ onClose }) => {
   return (
     <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
       <div className="bg-white shadow-lg rounded-lg w-96 relative p-6 z-50">
-        <h2 className="text-center text-2xl font-bold mb-4">Delete User</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">            
+
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 text-gray-500 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-all"
+        >
+          <XMarkIcon className="w-6 h-6" />
+        </button>
+
+        {/* Title */}
+        <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-6 text-center">
+          Create New User
+        </h2>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="relative">
+            <TrashIcon className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
             <input
-            placeholder="User Email"
+              placeholder="User Email"
               type="email"
               id="email"
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none dark:bg-gray-800 dark:text-white"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -69,7 +76,7 @@ const DeleteUser = ({ onClose }) => {
                 type="checkbox"
                 checked={isConfirmed}
                 onChange={(e) => setIsConfirmed(e.target.checked)}
-                className="form-checkbox"
+                className="ml-2 form-checkbox"
               />
               <span className="ml-2">Confirm Deletion</span>
             </label>

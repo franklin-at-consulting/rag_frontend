@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import logo from "../assets/digger.png"; // Your logo image
 import About from "./About";
 import CreateUser from "./CreateUser";
+import UpdateUser from "./UpdateUser";
+import DeleteUser from "./DeleteUser";
+import UserList from "./UserList"
 
 import {
   PlusCircleIcon,
@@ -22,6 +25,7 @@ export function Header({ role }) {
   const [isCreateUserOpen, setIsCreateUserOpen] = useState(false);
   const [isUpdateUserOpen, setIsUpdateUserOpen] = useState(false);
   const [isDeleteUserOpen, setIsDeleteUserOpen] = useState(false);
+  const [isUserListOpen, setIsUserListOpen] = useState(false);
 
   const navigate = useNavigate(); 
 
@@ -39,13 +43,16 @@ export function Header({ role }) {
     try {
       const response = await fetch("http://127.0.0.1:5000/logout", {
         method: "POST",
+        credentials: 'include',
         headers: {
           "Content-Type": "application/json",
         },
       });
+      const data = await response.json()
       if (response.ok) {
         sessionStorage.removeItem("isAuthenticated");
-        sessionStorage.removeItem("role");
+        sessionStorage.removeItem("role");        
+        console.log(data.message)
         navigate("/"); // Redirect to login page
       } else {
         console.error("Logout failed");
@@ -77,6 +84,11 @@ export function Header({ role }) {
     document.body.classList.remove("modal-open");
   };
 
+  const handleUserList = (setModalState) => {
+    setIsUserListOpen(true);
+    document.body.classList.remove("modal-open");
+  };
+
   return (
     <header className="flex justify-between pr-4 pb-3 pt-3 relative">
       {/* Logo and App Name on the Left */}
@@ -93,8 +105,8 @@ export function Header({ role }) {
 
         {/* Main Dropdown Menu */}
         {menuVisible && (
-          <div className="absolute top-10 right-10 bg-white divide-y divide-gray-200 rounded-sm shadow-lg w-48 z-10">
-            <ul className="py-1 text-sm text-gray-700 cursor-pointer">
+          <div className="absolute top-10 right-10 bg-white divide-y divide-gray-200 rounded-sm drop-shadow-lg w-60 z-10">
+            <ul className="text-lg py-1 mt-2 mb-2 text-gray-700 cursor-pointer">
 
               {/* Admin Users - Hover to Show Submenu */}
               {role === "admin" && (
@@ -103,27 +115,27 @@ export function Header({ role }) {
                   onMouseEnter={() => setAdminMenuVisible(true)}
                   onMouseLeave={() => setAdminMenuVisible(false)}
                 >
-                  <UsersIcon className="w-5 h-5" />
+                  <UsersIcon className="w-6 h-6" />
                   <span>User Management</span>
 
                   {/* Secondary Dropdown Menu - Appears on Hover */}
                   {adminMenuVisible && (
-                    <div className="absolute right-48 top-0 bg-white shadow-lg w-40 rounded-sm">
-                      <ul className="text-sm text-gray-700">
+                    <div className="absolute right-60 top-0 bg-white w-60 rounded-sm">
+                      <ul className="text-lg mt-2 mb-2 text-gray-700">
                         <li onClick={handleAddOption} className="flex items-center px-4 py-2 hover:bg-gray-100 rounded-sm cursor-pointer">
-                          <PlusCircleIcon className="w-4 h-4 mr-2" />
+                          <PlusCircleIcon className="w-6 h-6 mr-2" />
                           <span>Create User</span>
                         </li>
-                        <li className="flex items-center px-4 py-2 hover:bg-gray-100 rounded-sm cursor-pointer">
-                          <CircleStackIcon className="w-4 h-4 mr-2" />
+                        <li onClick={handleUserList} className="flex items-center px-4 py-2 hover:bg-gray-100 rounded-sm cursor-pointer">
+                          <CircleStackIcon className="w-6 h-6 mr-2" />
                           <span>View Users</span>
                         </li>
-                        <li className="flex items-center px-4 py-2 hover:bg-gray-100 rounded-sm cursor-pointer">
-                          <PencilIcon className="w-4 h-4 mr-2" />
-                          <span>Update User</span>
+                        <li onClick={handleUpdateOption} className="flex items-center px-4 py-2 hover:bg-gray-100 rounded-sm cursor-pointer">
+                          <PencilIcon className="w-6 h-6 mr-2" />
+                          <span>Change Passwords</span>
                         </li>
-                        <li className="flex items-center px-4 py-2 hover:bg-gray-100 rounded-sm cursor-pointer">
-                          <TrashIcon className="w-4 h-4 mr-2" />
+                        <li onClick={handleDeleteOption} className="flex items-center px-4 py-2 hover:bg-gray-100 rounded-sm cursor-pointer">
+                          <TrashIcon className="w-6 h-6 mr-2" />
                           <span>Delete User</span>
                         </li>
                       </ul>
@@ -136,7 +148,7 @@ export function Header({ role }) {
                 onClick={toggleAboutPopup}
                 className="px-4 py-1 hover:bg-gray-100 flex items-center rounded-sm space-x-2"
               >
-                <InformationCircleIcon className="w-5 h-5" />
+                <InformationCircleIcon className="w-6 h-6" />
                 <span>About</span>
               </li>
 
@@ -145,7 +157,7 @@ export function Header({ role }) {
                 onClick={handleLogout}
                 className="px-4 py-1 hover:bg-gray-100 flex items-center rounded-sm space-x-2"
               >
-                <ArrowLeftStartOnRectangleIcon className="w-5 h-5" />
+                <ArrowLeftStartOnRectangleIcon className="w-6 h-6" />
                 <span>Logout</span>
               </li>
             </ul>
@@ -164,6 +176,9 @@ export function Header({ role }) {
       )}
       {isDeleteUserOpen && (
         <DeleteUser onClose={() => handleCloseModal(setIsDeleteUserOpen)} />
+      )}
+      {isUserListOpen && (
+        <UserList onClose={() => handleCloseModal(setIsUserListOpen)} />
       )}
       
     </header>

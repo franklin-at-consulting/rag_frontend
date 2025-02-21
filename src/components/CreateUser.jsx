@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { XMarkIcon, UserIcon, LockClosedIcon, ShieldCheckIcon,EnvelopeIcon} from "@heroicons/react/24/outline";
+import { XMarkIcon, UserIcon, LockClosedIcon, ShieldCheckIcon, EnvelopeIcon } from "@heroicons/react/24/outline";
 
 const CreateUser = ({ onClose }) => {
   const [email, setEmail] = useState("");
@@ -17,19 +17,8 @@ const CreateUser = ({ onClose }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username,email, password, role }), // Send username, email, password, and role to the backend
+        body: JSON.stringify({ username, email, password, role }), // Send username, email, password, and role to the backend
       });
-      /*
-      if (!response.ok) {
-        if (response.status === 401) {
-          // Handle unauthorized access (e.g., redirect to login)
-          //console.log("Unauthorized access, redirecting to login.");
-          //alert("Unauthorized access, redirecting to login.")
-          navigate("/open-imb");
-        }
-        throw new Error('Network response was not ok');
-      }
-      */
 
       const data = await response.json();
       if (response.ok) {
@@ -47,7 +36,7 @@ const CreateUser = ({ onClose }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50">
       <div className="bg-white dark:bg-gray-900 shadow-lg rounded-lg w-96 p-6 relative transform transition-all duration-300 scale-100">
-        
+
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -76,7 +65,7 @@ const CreateUser = ({ onClose }) => {
               required
             />
           </div>
-          
+
           {/* Email Input */}
           <div className="relative">
             <EnvelopeIcon className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
@@ -104,16 +93,25 @@ const CreateUser = ({ onClose }) => {
           </div>
 
           {/* Role Selection */}
-          <div className="relative">
-            <ShieldCheckIcon className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+
+          <div className="relative flex items-center">
+            {/* Centered Icon */}
+            <ShieldCheckIcon className="absolute left-3 w-5 h-5 text-gray-400 pointer-events-none" />
+
+            {/* Select Dropdown */}
             <select
-              className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none dark:bg-gray-800 dark:text-white"
+              className="w-full appearance-none px-4 py-2 pl-10 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none dark:bg-gray-800 dark:text-white"
               value={role}
               onChange={(e) => setRole(e.target.value)}
             >
               <option value="user">User</option>
               <option value="admin">Admin</option>
             </select>
+
+            {/* Moved Downward Arrow */}
+            <div className="absolute right-2 pointer-events-none text-gray-500">
+              ▼
+            </div>
           </div>
 
           {/* Action Buttons */}
