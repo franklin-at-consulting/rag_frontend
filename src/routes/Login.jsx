@@ -26,7 +26,7 @@ const Login = () => {
         console.log(data.message)
         navigate('/app') // Redirect to the main app page after successful login
       } else {
-        alert(data.error);
+        alert(data.message);
       }
     } catch (error) {
       console.error("Error:", error);
