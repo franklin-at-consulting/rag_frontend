@@ -116,7 +116,7 @@ const UpdateUser = ({ onClose }) => {
             <button
               type="button"
               onClick={onClose}
-              className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-all focus:ring-2 focus:ring-red-400"
+              className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-all focus:ring-2 focus:ring-red-400"
             >
               Cancel
             </button>

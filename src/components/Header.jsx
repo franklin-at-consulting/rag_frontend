@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/digger.png"; // Your logo image
 import About from "./About";
-import { InformationCircleIcon, ArrowLeftStartOnRectangleIcon, Bars4Icon } from "@heroicons/react/24/outline";
+import UserList from "./UserList";
+import { InformationCircleIcon, ArrowLeftStartOnRectangleIcon, Bars4Icon, UsersIcon } from "@heroicons/react/24/outline";
 
 export function Header({ role }) {
   const [menuVisible, setMenuVisible] = useState(false);
   const [showAboutPopup, setShowAboutPopup] = useState(false);
-  const navigate = useNavigate(); 
+  const [isUserListOpen, setIsUserListOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
@@ -16,6 +18,11 @@ export function Header({ role }) {
   const toggleAboutPopup = () => {
     setShowAboutPopup(!showAboutPopup);
     document.body.style.overflow = "auto";
+  };
+
+  const handleUserList = (setModalState) => {
+    setIsUserListOpen(true);
+    document.body.classList.remove("modal-open");
   };
 
   const handleLogout = async () => {
@@ -28,7 +35,7 @@ export function Header({ role }) {
       const data = await response.json();
       if (response.ok) {
         sessionStorage.removeItem("isAuthenticated");
-        sessionStorage.removeItem("role");        
+        sessionStorage.removeItem("role");
         console.log(data.message);
         navigate("/"); // Redirect to login page
       } else {
@@ -54,6 +61,15 @@ export function Header({ role }) {
         {menuVisible && (
           <div className="absolute top-10 right-10 bg-white divide-y divide-gray-200 rounded-sm drop-shadow-lg w-60 z-10">
             <ul className="text-lg py-1 mt-2 mb-2 text-gray-700 cursor-pointer">
+              {role === "admin" && (
+                <li
+                  className="px-4 py-1 hover:bg-gray-100 flex items-center space-x-2 rounded-sm relative"
+                  onClick={handleUserList}
+                >
+                  <UsersIcon className="w-6 h-6" />
+                  <span>User Management</span>
+                </li>
+              )}
               <li
                 onClick={toggleAboutPopup}
                 className="px-4 py-1 hover:bg-gray-100 flex items-center rounded-sm space-x-2"
@@ -74,6 +90,9 @@ export function Header({ role }) {
       </div>
 
       {showAboutPopup && <About onClose={toggleAboutPopup} />}
+      {isUserListOpen && <UserList onClose={() => setIsUserListOpen(false)} />}
+
+
     </header>
   );
 }
