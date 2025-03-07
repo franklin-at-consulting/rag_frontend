@@ -80,7 +80,7 @@ const UserList = ({ onClose }) => {
 
         <div className="overflow-x-auto max-h-96 scrollbar-hide">
           <table className="w-full table-auto border-collapse">
-            <thead className="sticky top-0 z-10 bg-gray-200">
+            <thead className="text-left sticky top-0 z-10 bg-gray-200">
               <tr>
                 <th className="px-4 py-3">Email</th>
                 <th className="px-4 py-3">Last Login</th>
