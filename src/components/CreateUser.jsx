@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { XMarkIcon, UserIcon, LockClosedIcon, ShieldCheckIcon, EnvelopeIcon } from "@heroicons/react/24/outline";
 
-const CreateUser = ({ onClose }) => {
+const CreateUser = ({ onClose,refreshUser }) => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -23,6 +23,7 @@ const CreateUser = ({ onClose }) => {
       const data = await response.json();
       if (response.ok) {
         alert("User created successfully!");
+        refreshUser()
         onClose(); // Close the modal after successful creation
       } else {
         alert(data.message || "Failed to create user.");

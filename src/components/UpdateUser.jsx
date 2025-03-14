@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { XMarkIcon, UserIcon, LockClosedIcon, ShieldCheckIcon, EnvelopeIcon } from "@heroicons/react/24/outline";
 
-const UpdateUser = ({ onClose }) => {
-  const [email, setEmail] = useState("");
+const UpdateUser = ({ onClose,user }) => {
+  const [email, setEmail] = useState(user.email);
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 

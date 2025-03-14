@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useRef,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/digger.png"; // Your logo image
 import About from "./About";
@@ -10,18 +10,39 @@ export function Header({ role }) {
   const [showAboutPopup, setShowAboutPopup] = useState(false);
   const [isUserListOpen, setIsUserListOpen] = useState(false);
   const navigate = useNavigate();
+  const menuRef = useRef(null);
 
   const toggleMenu = () => {
-    setMenuVisible(!menuVisible);
+    setMenuVisible((prev) => !prev);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuVisible(false);
+      }
+    };
+
+    if (menuVisible) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuVisible]);
 
   const toggleAboutPopup = () => {
     setShowAboutPopup(!showAboutPopup);
+    setMenuVisible(false);
     document.body.style.overflow = "auto";
   };
 
   const handleUserList = (setModalState) => {
     setIsUserListOpen(true);
+    setMenuVisible(false);
     document.body.classList.remove("modal-open");
   };
 
@@ -44,6 +65,7 @@ export function Header({ role }) {
     } catch (error) {
       console.error("An error occurred during logout", error);
     }
+    setMenuVisible(false);
   };
 
   return (
@@ -59,7 +81,10 @@ export function Header({ role }) {
         </button>
 
         {menuVisible && (
-          <div className="absolute top-10 right-10 bg-white divide-y divide-gray-200 rounded-sm drop-shadow-lg w-60 z-10">
+          <div
+            ref={menuRef}
+            className="absolute top-10 right-10 bg-white divide-y divide-gray-200 rounded-sm drop-shadow-lg w-60 z-10"
+          >
             <ul className="text-lg py-1 mt-2 mb-2 text-gray-700 cursor-pointer">
               {role === "admin" && (
                 <li
