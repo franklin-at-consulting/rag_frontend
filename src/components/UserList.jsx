@@ -95,6 +95,7 @@ const UserList = ({ onClose }) => {
           <table className="w-full table-auto border-collapse">
             <thead className="text-left sticky top-0 z-10 bg-gray-200">
               <tr>
+                <th className="px-4 py-3">User Name</th>
                 <th className="px-4 py-3">Email</th>
                 <th className="px-4 py-3">Last Login</th>
                 <th className="px-4 py-3">Status</th>
@@ -106,6 +107,7 @@ const UserList = ({ onClose }) => {
               {filteredUsers.length > 0 ? (
                 filteredUsers.map((user) => (
                   <tr key={user.email} className="hover:bg-gray-100">
+                    <td className="border px-4 py-3">{user.username}</td>
                     <td className="border px-4 py-3">{user.email}</td>
                     <td className="border px-4 py-3">{user.login_date || "N/A"}</td>
                     <td className="border px-4 py-3 text-center">

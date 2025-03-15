@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Header } from "./components/Header";
 import SearchBar from "./components/SearchBar";
 import ShowResults from "./components/ShowResults";
@@ -13,7 +13,31 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [role, setRole] = useState(""); // State to store user role
-  const [showUploadPopup, setShowUploadPopup] = useState(false);
+  const [showUploadPopup, setShowUploadPopup] = useState(false);  
+  const navigate = useNavigate();
+  
+    useEffect(() => {
+      const checkSession = async () => {
+        try {
+          const response = await fetch("http://127.0.0.1:5000/api/check-session", {
+            method: "GET",
+            credentials: "include",
+          });
+  
+          if (response.status === 401) {  // 🔹 Handle session expiration
+            alert("Your session has expired. Redirecting to login...");
+            sessionStorage.removeItem("isAuthenticated");
+            sessionStorage.removeItem("role");
+            navigate("/");
+          }
+        } catch (error) {
+          console.error("Error checking session:", error);
+        }
+      };
+  
+      const interval = setInterval(checkSession, 60000); // 🔹 Check every 60 seconds
+      return () => clearInterval(interval); // Cleanup on unmount
+    }, [navigate]);
 
   const toggleUploadPopup = () => {
     setShowUploadPopup(!showUploadPopup);
