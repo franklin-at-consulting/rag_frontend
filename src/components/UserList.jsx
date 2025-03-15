@@ -132,6 +132,7 @@ const UserList = ({ onClose }) => {
                             setSelectedUser(user);
                             setIsUpdateUserOpen(true);
                           }}
+                          title="Password Change Option"
                           className="text-blue-500 hover:text-blue-700"
                         >
                           <PencilIcon className="w-5 h-5" />
@@ -143,6 +144,7 @@ const UserList = ({ onClose }) => {
                             setSelectedUser(user);
                             setIsDeleteUserOpen(true);
                           }}
+                          title="Delete User Option"
                           className="text-red-500 hover:text-red-700"
                         >
                           <TrashIcon className="w-5 h-5" />
