@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logo from "../assets/digger.png";
+import logo from "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -38,7 +38,7 @@ const Login = () => {
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
         <div className="text-center mb-6">
-          <img src={logo} alt="App Logo" className="w-24 h-24 mx-auto mb-4" />
+          <img src={logo} alt="App Logo" className="w-24 h-32 mx-auto mb-4" />
           <h2 className="text-2xl font-semibold text-gray-700">Login</h2>
         </div>
         <form onSubmit={handleLogin}>

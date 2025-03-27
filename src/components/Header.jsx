@@ -1,6 +1,6 @@
 import React, { useState,useRef,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/digger.png"; // Your logo image
+import logo from "../assets/logo.png"; // Your logo image
 import About from "./About";
 import UserList from "./UserList";
 import { InformationCircleIcon, ArrowLeftStartOnRectangleIcon, Bars4Icon, UsersIcon } from "@heroicons/react/24/outline";
@@ -71,7 +71,7 @@ export function Header({ role }) {
   return (
     <header className="flex justify-between pr-4 pb-3 pt-3 relative">
       <div className="flex items-center space-x-2">
-        <img src={logo} alt="App Logo" className="w-8 h-8" />
+        <img src={logo} alt="App Logo" className="w-8 h-12" />
         <h1 className="text-xl text-gray-800">RAG Document Application</h1>
       </div>
 

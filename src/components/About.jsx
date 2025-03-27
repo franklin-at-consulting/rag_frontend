@@ -1,11 +1,11 @@
-import logo from "../assets/digger.png";
+import logo from "../assets/logo.png";
 
 function About({onClose}) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center z-50">
       <div className="bg-white dark:bg-white p-8 rounded-lg shadow-lg max-w-md mx-auto my-10">
         <div className="text-center mb-6">
-          <img src={logo} alt="App Icon" className="w-16 h-16 mx-auto mb-4" />
+          <img src={logo} alt="App Icon" className="w-16 h-20 mx-auto mb-4" />
           <h2 className="text-2xl font-bold text-gray-900 dark:text-black">
             About RAGDA
           </h2>
