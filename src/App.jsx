@@ -19,7 +19,7 @@ function App() {
     useEffect(() => {
       const checkSession = async () => {
         try {
-          const response = await fetch("http://127.0.0.1:5000/api/check-session", {
+          const response = await fetch("http://54.237.145.9/api/check-session", {
             method: "GET",
             credentials: "include",
           });
@@ -59,7 +59,7 @@ function App() {
     setResults(null);
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/query', {
+      const response = await fetch('http://54.237.145.9/api/query', {
         method: "POST",
         credentials: "include",
         headers: {

@@ -15,7 +15,7 @@ const UserList = ({ onClose }) => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:5000/api/users", {
+        const response = await fetch("http://54.237.145.9/api/users", {
           method: "GET",
           credentials: "include",
           headers: { "Content-Type": "application/json" },
@@ -34,7 +34,7 @@ const UserList = ({ onClose }) => {
 
   const refreshUsers = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:5000/api/users", {
+      const response = await fetch("http://54.237.145.9/api/users", {
         method: "GET",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -52,7 +52,7 @@ const UserList = ({ onClose }) => {
 
   const handleToggleBlock = async (userEmail, isBlocked) => {
     try {
-      const response = await fetch("http://127.0.0.1:5000/api/update-block-status", {
+      const response = await fetch("http://54.237.145.9/api/update-block-status", {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },

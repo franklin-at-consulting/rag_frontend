@@ -17,7 +17,7 @@ const UpdateUser = ({ onClose,user }) => {
     }
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/api/update-user", {
+      const response = await fetch("http://54.237.145.9/api/update-user", {
         method: "PUT", // Use PUT for updates
         credentials: 'include',  // This ensures that cookies (including session cookies) are sent
         headers: {

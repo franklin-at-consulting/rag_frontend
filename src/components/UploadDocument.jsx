@@ -42,7 +42,7 @@ const UploadDocument = ({ onClose }) => {
     formData.append("file", file);
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/upload", {
+      const response = await fetch("http://54.237.145.9/api/upload", {
         method: "POST",
         body: formData,
       });

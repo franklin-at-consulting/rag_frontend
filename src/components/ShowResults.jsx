@@ -1,3 +1,5 @@
+import React from 'react';
+
 const ShowResults = ({ data }) => {
   return (
     <div className="max-w-3xl mx-auto p-4">
