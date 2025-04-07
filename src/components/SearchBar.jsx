@@ -1,33 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 const SearchBar = ({ onSearch }) => {
-  const [searchTerm, setSearchTerm] = useState(''); // Manages the search term
+  const [searchTerm, setSearchTerm] = useState('');
+  const textareaRef = useRef(null);
 
   const performSearch = (event) => {
-    event.preventDefault(); // Prevents the page from refreshing
-    if (searchTerm.trim() === '') return; // Prevent search if the field is empty
-    onSearch(searchTerm); // Calls the `onSearch` function with the entered term
+    event.preventDefault();
+    if (searchTerm.trim() === '') return;
+    onSearch(searchTerm.trim());
+    setSearchTerm('');
+    resizeTextarea();
   };
 
   const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      performSearch(event); // Handles search on pressing Enter
+    if (event.key === 'Enter' && !event.shiftKey) {
+      performSearch(event);
     }
   };
 
+  const resizeTextarea = () => {
+    const el = textareaRef.current;
+    if (el) {
+      el.style.height = 'auto';
+      el.style.height = `${Math.min(el.scrollHeight, 120)}px`;
+    }
+  };
+
+  useEffect(() => {
+    resizeTextarea();
+  }, [searchTerm]);
+
   return (
-    <form onSubmit={performSearch} className="search-container mx-auto">
-      <label
-        htmlFor="default-search"
-        className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-      >
-        Search
-      </label>
-      <div className="relative">
-        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+    <form
+      onSubmit={performSearch}
+      className="flex justify-center items-center w-full px-4 py-2"
+    >
+      <div className="relative w-full max-w-3xl bg-white border border-gray-300 rounded-2xl shadow-sm px-4 py-2 focus-within:ring-2 focus-within:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white">
+        {/* Lens Icon - absolute and centered */}
+        <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500">
           <svg
-            className="w-4 h-4 text-gray-400 dark:text-gray-500"
-            aria-hidden="true"
+            className="w-5 h-5"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 20 20"
@@ -41,37 +53,41 @@ const SearchBar = ({ onSearch }) => {
             />
           </svg>
         </div>
-        <input
-          type="search"
-          id="default-search"
-          className="block w-full p-4 pr-20 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="Make a query here..."
-          required
-          onKeyDown={handleKeyDown}
-          onChange={(e) => setSearchTerm(e.target.value)} // Updates search term
-        />
-        <button
-          type="submit"
-          className="text-white absolute right-2.5 bottom-2.5 bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="feather feather-arrow-right"
-            viewBox="0 0 24 24"
+
+        <div className="flex items-end">
+          <textarea
+            ref={textareaRef}
+            rows={1}
+            className="flex-grow max-h-[120px] overflow-y-auto resize-none bg-transparent text-base focus:outline-none pl-10 pr-4 placeholder-gray-400 dark:placeholder-gray-500"
+            placeholder="Make a query here..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
+          <button
+            type="submit"
+            className="ml-2 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-1 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-        </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="feather feather-arrow-right"
+              viewBox="0 0 24 24"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
       </div>
     </form>
   );
 };
 
 export default SearchBar;
+
