@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { apiUrl } from "../config";
 import { XMarkIcon, UserIcon, LockClosedIcon, ShieldCheckIcon, EnvelopeIcon } from "@heroicons/react/24/outline";
 
 const CreateUser = ({ onClose,refreshUser }) => {
@@ -11,7 +12,7 @@ const CreateUser = ({ onClose,refreshUser }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://54.237.145.9/api/create-user", {
+      const response = await fetch(apiUrl('/create-user'), {
         method: "POST",
         credentials: 'include',  // This ensures that cookies (including session cookies) are sent
         headers: {

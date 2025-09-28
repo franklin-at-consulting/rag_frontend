@@ -4,6 +4,7 @@ import { Header } from "./components/Header";
 import SearchBar from "./components/SearchBar";
 import ShowResults from "./components/ShowResults";
 import UploadDocument from './components/UploadDocument';
+import { apiUrl } from "./config";
 import {
   PlusCircleIcon,
 } from "@heroicons/react/24/outline";
@@ -19,7 +20,7 @@ function App() {
     useEffect(() => {
       const checkSession = async () => {
         try {
-          const response = await fetch("http://54.237.145.9/api/check-session", {
+          const response = await fetch(apiUrl('/check-session'), {
             method: "GET",
             credentials: "include",
           });
@@ -59,7 +60,7 @@ function App() {
     setResults(null);
 
     try {
-      const response = await fetch('http://54.237.145.9/api/query', {
+      const response = await fetch(apiUrl('/query'), {
         method: "POST",
         credentials: "include",
         headers: {

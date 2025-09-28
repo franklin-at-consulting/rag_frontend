@@ -4,6 +4,7 @@ import logo from "../assets/logo.png"; // Your logo image
 import About from "./About";
 import UserList from "./UserList";
 import { InformationCircleIcon, ArrowLeftStartOnRectangleIcon, Bars4Icon, UsersIcon } from "@heroicons/react/24/outline";
+import { apiUrl } from "../config";
 
 export function Header({ role }) {
   const [menuVisible, setMenuVisible] = useState(false);
@@ -48,7 +49,7 @@ export function Header({ role }) {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://54.237.145.9/api/logout", {
+      const response = await fetch(apiUrl('/logout'), {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },

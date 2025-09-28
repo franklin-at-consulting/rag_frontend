@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { apiUrl } from "../config";
 import CreateUser from "./CreateUser";
 import UpdateUser from "./UpdateUser";
 import DeleteUser from "./DeleteUser";
@@ -15,7 +16,7 @@ const UserList = ({ onClose }) => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch("http://54.237.145.9/api/users", {
+        const response = await fetch(apiUrl('/users'), {
           method: "GET",
           credentials: "include",
           headers: { "Content-Type": "application/json" },
@@ -34,7 +35,7 @@ const UserList = ({ onClose }) => {
 
   const refreshUsers = async () => {
     try {
-      const response = await fetch("http://54.237.145.9/api/users", {
+      const response = await fetch(apiUrl('/users'), {
         method: "GET",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -52,7 +53,7 @@ const UserList = ({ onClose }) => {
 
   const handleToggleBlock = async (userEmail, isBlocked) => {
     try {
-      const response = await fetch("http://54.237.145.9/api/update-block-status", {
+      const response = await fetch(apiUrl('/update-block-status'), {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },

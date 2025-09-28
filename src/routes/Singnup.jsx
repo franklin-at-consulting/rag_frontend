@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { apiUrl } from "../config";
 
 const Signup = () => {
   const [username, setUsername] = useState("");
@@ -8,7 +9,7 @@ const Signup = () => {
   const handleSignup = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch("http://54.237.145.9/api/signup", {
+      const response = await fetch(apiUrl('/signup'), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

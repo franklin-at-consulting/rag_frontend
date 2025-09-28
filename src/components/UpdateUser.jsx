@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { apiUrl } from "../config";
 import { XMarkIcon, UserIcon, LockClosedIcon, ShieldCheckIcon, EnvelopeIcon } from "@heroicons/react/24/outline";
 
 const UpdateUser = ({ onClose,user }) => {
@@ -17,7 +18,7 @@ const UpdateUser = ({ onClose,user }) => {
     }
 
     try {
-      const response = await fetch("http://54.237.145.9/api/update-user", {
+      const response = await fetch(apiUrl('/update-user'), {
         method: "PUT", // Use PUT for updates
         credentials: 'include',  // This ensures that cookies (including session cookies) are sent
         headers: {

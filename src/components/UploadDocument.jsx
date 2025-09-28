@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { apiUrl } from "../config";
 import { XMarkIcon, ArrowUpTrayIcon } from "@heroicons/react/24/outline";
 
 const UploadDocument = ({ onClose }) => {
@@ -42,7 +43,7 @@ const UploadDocument = ({ onClose }) => {
     formData.append("file", file);
 
     try {
-      const response = await fetch("http://54.237.145.9/api/upload", {
+      const response = await fetch(apiUrl('/upload'), {
         method: "POST",
         body: formData,
       });

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { apiUrl } from "../config";
 import {  
   TrashIcon,
   XMarkIcon, 
@@ -18,7 +19,7 @@ const DeleteUser = ({ onClose,user,refreshUser }) => {
     }
 
     try {
-      const response = await fetch("http://54.237.145.9/api/delete-user", {
+      const response = await fetch(apiUrl('/delete-user'), {
         method: "DELETE", // Use DELETE for removing the user
         credentials: 'include',  // This ensures that cookies (including session cookies) are sent
         headers: {

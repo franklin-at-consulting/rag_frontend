@@ -5,6 +5,7 @@ export default {
   server: {
     host: '0.0.0.0',  // Listen on all interfaces, not just localhost
     allowedHosts: [
+      'cepd-ai.com',
       'ec2-54-91-190-165.compute-1.amazonaws.com',  // Allow this specific host
       'localhost',  // Keep localhost for local testing
       '127.0.0.1',  // Optional: Explicitly allow loopback
@@ -13,9 +14,3 @@ export default {
   }
 }
 
-
-
-// https://vitejs.dev/config/
-//export default defineConfig({
-//  plugins: [react()],
-//})
