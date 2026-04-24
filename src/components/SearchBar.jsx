@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-const SearchBar = ({ onSearch }) => {
+const SearchBar = ({ onSearch, disabled = false }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const textareaRef = useRef(null);
 
   const performSearch = (event) => {
     event.preventDefault();
-    if (searchTerm.trim() === '') return;
+    if (disabled || searchTerm.trim() === '') return;
     onSearch(searchTerm.trim());
     setSearchTerm('');
     resizeTextarea();
@@ -61,12 +61,15 @@ const SearchBar = ({ onSearch }) => {
             className="flex-grow max-h-[120px] overflow-y-auto resize-none bg-transparent text-base focus:outline-none pl-10 pr-4 placeholder-gray-400 dark:placeholder-gray-500"
             placeholder="Make a query here..."
             value={searchTerm}
+            disabled={disabled}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={handleKeyDown}
           />
           <button
             type="submit"
-            className="ml-2 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-1 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            disabled={disabled}
+            className="ml-2 text-white bg-blue-600 hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-1 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            aria-label="Send query"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -90,4 +93,3 @@ const SearchBar = ({ onSearch }) => {
 };
 
 export default SearchBar;
-

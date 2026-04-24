@@ -5,20 +5,32 @@ const ShowResults = ({ data }) => {
 
   const handleCopy = async () => {
     const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = data.response;
-    await navigator.clipboard.writeText(tempDiv.textContent);
+    tempDiv.innerHTML = data.content || '';
+    await navigator.clipboard.writeText(tempDiv.textContent || '');
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const sources = data.sources || [];
+
   return (
-    <div className="max-w-3xl mx-auto p-4">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold">Response</h2>
+    <div
+      className={`max-w-3xl rounded-2xl rounded-bl-sm border px-4 py-3 shadow-md ${
+        data.isError
+          ? "border-red-200 bg-red-50 text-red-800"
+          : "border-gray-200 bg-white text-gray-800"
+      }`}
+    >
+      <div className="mb-3 flex items-center justify-between gap-4">
+        <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+          Assistant
+        </div>
         <div className="relative">
           <button
             onClick={handleCopy}
-            className="p-2 text-gray-500 hover:text-gray-700 transition-colors flex items-center gap-1"
+            className="flex items-center gap-1 text-gray-500 transition-colors hover:text-gray-700"
+            type="button"
+            aria-label="Copy assistant response"
           >
             {copied ? (
               <>
@@ -34,7 +46,7 @@ const ShowResults = ({ data }) => {
                     clipRule="evenodd"
                   />
                 </svg>
-                <span className="text-sm">Copied!</span>
+                <span className="text-xs">Copied!</span>
               </>
             ) : (
               <svg
@@ -52,44 +64,57 @@ const ShowResults = ({ data }) => {
       </div>
       <div className="relative">
         <div
-          className="prose prose-indigo mb-6 pr-10"
-          dangerouslySetInnerHTML={{ __html: data.response }}
+          className={`prose prose-indigo max-w-none text-sm leading-6 ${
+            sources.length > 0 ? "mb-5" : ""
+          }`}
+          dangerouslySetInnerHTML={{ __html: data.content || '' }}
         />
       </div>
 
-      <h3 className="text-lg font-semibold mb-2">Sources</h3>
-      <ul>
-        {data.sources.map((source, index) => (
-          <li
-            key={index}
-            className="flex items-start mb-4 p-4 border rounded-lg"
-          >
-            <img
-              src={source.thumbnail_url}
-              alt={source.document_name}
-              className="w-24 h-24 mr-4 object-cover"
-            />
-            <div>
-              <h4 className="font-semibold">{source.document_name}</h4>
-              <p className="text-sm text-gray-700 mb-2">
-                Score: {source.score}
-              </p>
-              <p className="text-sm text-gray-700 mb-2">{source.paragraph}</p>
-              <a
-                href={source.document_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:underline"
+      {sources.length > 0 && (
+        <div className="rounded-xl border border-amber-200 bg-amber-50 p-3">
+          <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-amber-800">
+            Sources for this answer
+          </h3>
+          <ul className="space-y-3">
+            {sources.map((source, index) => (
+              <li
+                key={`${source.document_name}-${index}`}
+                className="flex items-start rounded-lg border border-amber-100 bg-white p-3"
               >
-                View Document
-              </a>
-            </div>
-          </li>
-        ))}
-      </ul>
+                {source.thumbnail_url && (
+                  <img
+                    src={source.thumbnail_url}
+                    alt={source.document_name}
+                    className="mr-4 h-20 w-20 rounded border object-cover"
+                  />
+                )}
+                <div>
+                  <h4 className="font-semibold text-gray-800">{source.document_name}</h4>
+                  {source.score !== undefined && (
+                    <p className="mb-2 text-xs text-gray-500">
+                      Score: {source.score}
+                    </p>
+                  )}
+                  {source.paragraph && (
+                    <p className="mb-2 text-sm text-gray-700">{source.paragraph}</p>
+                  )}
+                  <a
+                    href={source.document_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-blue-600 hover:underline"
+                  >
+                    View Document
+                  </a>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
 
 export default ShowResults;
-

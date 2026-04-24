@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from "./components/Header";
 import SearchBar from "./components/SearchBar";
@@ -9,12 +9,24 @@ import {
   PlusCircleIcon,
 } from "@heroicons/react/24/outline";
 
+const CHAT_HISTORY_KEY = "ragChatMessages";
+
+const loadChatHistory = () => {
+  try {
+    const savedMessages = sessionStorage.getItem(CHAT_HISTORY_KEY);
+    return savedMessages ? JSON.parse(savedMessages) : [];
+  } catch (error) {
+    console.error("Error loading chat history:", error);
+    return [];
+  }
+};
+
 function App() {
-  const [results, setResults] = useState(null);
+  const [messages, setMessages] = useState(loadChatHistory);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [role, setRole] = useState(""); // State to store user role
   const [showUploadPopup, setShowUploadPopup] = useState(false);  
+  const latestMessageRef = useRef(null);
   const navigate = useNavigate();
   
     useEffect(() => {
@@ -53,11 +65,23 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    latestMessageRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+  }, [messages, loading]);
+
+  useEffect(() => {
+    sessionStorage.setItem(CHAT_HISTORY_KEY, JSON.stringify(messages));
+  }, [messages]);
+
   const handleSearch = async (searchTerm) => {
-    // Reset states
+    const userMessage = {
+      id: `${Date.now()}-user`,
+      role: "user",
+      content: searchTerm,
+    };
+
+    setMessages((currentMessages) => [...currentMessages, userMessage]);
     setLoading(true);
-    setError(null);
-    setResults(null);
 
     try {
       const response = await fetch(apiUrl('/query'), {
@@ -73,9 +97,22 @@ function App() {
         throw new Error(`Error fetching data: ${response.status}`);
       }
       const data = await response.json();
-      setResults(data);
+      const assistantMessage = {
+        id: `${Date.now()}-assistant`,
+        role: "assistant",
+        content: data.response,
+        sources: data.sources || [],
+      };
+      setMessages((currentMessages) => [...currentMessages, assistantMessage]);
     } catch (err) {
-      setError(err.message);
+      const errorMessage = {
+        id: `${Date.now()}-assistant-error`,
+        role: "assistant",
+        content: `Can't Obtain The Information: ${err.message}`,
+        sources: [],
+        isError: true,
+      };
+      setMessages((currentMessages) => [...currentMessages, errorMessage]);
     } finally {
       setLoading(false);
     }
@@ -108,39 +145,56 @@ function App() {
           <h2 className="text-lg mb-6">Results</h2>
           <hr className="border-t-2 border-gray-300 mb-4" />
 
-          {/* Loader */}
-          {loading && (
-            <div className="flex justify-center items-center mt-6">
-              <div className="border-t-4 border-blue-500 border-solid rounded-full w-16 h-16 animate-spin"></div>
-              <p className="ml-4 text-lg">Thinking...</p>
-            </div>
-          )}
-          {error && (
-            <p className="text-red-500 flex justify-center items-center mt-6">
-              {`Can't Obtain The Information: ${error}`}
-            </p>
-          )}
-
-          {/* Content Area for ShowResults */}
+          {/* Chat thread */}
           <div
             id="results-container"
-            className="mt-6 flex-grow overflow-y-auto scrollbar-hide"
+            className="mt-6 flex-grow overflow-y-auto pr-2"
           >
-            {results ? (
-              <ShowResults data={results} />
+            {messages.length > 0 ? (
+              <div className="space-y-6">
+                {messages.map((message) => (
+                  <div
+                    key={message.id}
+                    className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
+                  >
+                    {message.role === "user" ? (
+                      <div className="max-w-3xl rounded-2xl rounded-br-sm bg-blue-600 px-4 py-3 text-white shadow-md">
+                        <div className="mb-1 text-xs font-semibold uppercase tracking-wide text-blue-100">
+                          You
+                        </div>
+                        <p className="whitespace-pre-wrap text-sm leading-6">{message.content}</p>
+                      </div>
+                    ) : (
+                      <ShowResults data={message} />
+                    )}
+                  </div>
+                ))}
+                {loading && (
+                  <div className="flex justify-start">
+                    <div className="max-w-3xl rounded-2xl rounded-bl-sm border border-gray-200 bg-white px-4 py-3 text-gray-700 shadow-md">
+                      <div className="mb-1 text-xs font-semibold uppercase tracking-wide text-gray-500">
+                        Assistant
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="h-5 w-5 animate-spin rounded-full border-2 border-blue-500 border-t-transparent"></div>
+                        <p className="text-sm">Thinking...</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                <div ref={latestMessageRef} />
+              </div>
             ) : (
-              !loading && !error && (
-                <div className="text-center mt-6 text-gray-500">
-                  <h3 className="text-xl">Welcome to the RAG Documents App!</h3>
-                  <p>Start by entering a query in the search box to explore your documents.</p>
-                </div>
-              )
+              <div className="text-center mt-6 text-gray-500">
+                <h3 className="text-xl">Welcome to the RAG Documents App!</h3>
+                <p>Start by entering a query in the search box to explore your documents.</p>
+              </div>
             )}
           </div>
 
           {/* SearchBar */}
           <div className="w-full pt-3 rounded-xl mt-4 self-end">
-            <SearchBar onSearch={handleSearch} />
+            <SearchBar onSearch={handleSearch} disabled={loading} />
           </div>
         </div>
 
