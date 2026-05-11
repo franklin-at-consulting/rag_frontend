@@ -35,7 +35,7 @@ const SearchBar = ({ onSearch, disabled = false }) => {
       onSubmit={performSearch}
       className="flex justify-center items-center w-full px-4 py-2"
     >
-      <div className="relative w-full max-w-3xl bg-white border border-gray-300 rounded-2xl shadow-sm px-4 py-2 focus-within:ring-2 focus-within:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white">
+      <div className="relative w-full max-w-3xl bg-white border border-gray-300 rounded-2xl shadow-sm px-4 py-2 focus-within:ring-2 focus-within:ring-blue-500 dark:bg-slate-900 dark:border-slate-700 dark:text-white">
         {/* Lens Icon - absolute and centered */}
         <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500">
           <svg
@@ -58,7 +58,7 @@ const SearchBar = ({ onSearch, disabled = false }) => {
           <textarea
             ref={textareaRef}
             rows={1}
-            className="flex-grow max-h-[120px] overflow-y-auto resize-none bg-transparent text-base focus:outline-none pl-10 pr-4 placeholder-gray-400 dark:placeholder-gray-500"
+            className="flex-grow max-h-[120px] overflow-y-auto resize-none bg-transparent text-base focus:outline-none pl-10 pr-4 placeholder-gray-400 dark:text-slate-100 dark:placeholder-slate-500"
             placeholder="Make a query here..."
             value={searchTerm}
             disabled={disabled}

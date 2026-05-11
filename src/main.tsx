@@ -7,6 +7,17 @@ import ProtectedRoute from './routes/ProtectedRoute';
 import './styles.css';
 import './popups.css';
 
+const savedTheme = localStorage.getItem('ragTheme');
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const initialTheme = savedTheme === 'dark' || savedTheme === 'light'
+  ? savedTheme
+  : prefersDark
+    ? 'dark'
+    : 'light';
+
+document.documentElement.classList.toggle('dark', initialTheme === 'dark');
+document.documentElement.style.colorScheme = initialTheme;
+
 const router = createBrowserRouter([
   {
     path: '/',

@@ -11,6 +11,12 @@ html, body, #root {
   background-color: #EDEFFA;
 }
 
+html.dark,
+html.dark body,
+html.dark #root {
+  background-color: #0f172a;
+}
+
 .app {
   flex: 1;
   display: flex;
@@ -24,6 +30,11 @@ html, body, #root {
   margin-right: 1%;
 }
 
+html.dark .app {
+  background-color: #0f172a;
+  color: #e2e8f0;
+}
+
 header {
   display: flex;
   align-items: center;
@@ -32,6 +43,10 @@ header {
   background-color: #EDEFFA;  
   position: relative;
   width: 100%;  
+}
+
+html.dark header {
+  background-color: #0f172a;
 }
 
 header .logo-container {
@@ -49,6 +64,10 @@ header .logo-container h1 {
   font-size: 24px;
   font-weight: 600;
   color: #333;
+}
+
+html.dark header .logo-container h1 {
+  color: #f8fafc;
 }
 
 header .user-options {
@@ -76,6 +95,12 @@ header .user-options .menu {
   z-index: 10;
 }
 
+html.dark header .user-options .menu {
+  background-color: #1e293b;
+  border-color: #334155;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
 header .user-options .menu.visible {
   display: block;
 }
@@ -88,6 +113,10 @@ header .user-options .menu li {
 
 header .user-options .menu li:hover {
   background-color: #CBD5E1;
+}
+
+html.dark header .user-options .menu li:hover {
+  background-color: #334155;
 }
 
 header .user-options .menu li:last-child {
@@ -104,6 +133,10 @@ header .user-options .menu li a {
   text-decoration: none;
   color: #333;
 }
+
+html.dark header .user-options .menu li a {
+  color: #e2e8f0;
+}
 .center-button {
   display: flex;
   justify-content: center;
@@ -113,6 +146,11 @@ header .user-options .menu li a {
   width: 100%; /* Ensures button takes up just enough space */
   border-radius: 0.9rem;  
   border:1px solid #d1d5db;  
+}
+
+html.dark .center-button {
+  border-color: #475569;
+  color: #e2e8f0;
 }
 
 /*Use for show CRUD modals */

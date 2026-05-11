@@ -17,18 +17,18 @@ const ShowResults = ({ data }) => {
     <div
       className={`max-w-3xl rounded-2xl rounded-bl-sm border px-4 py-3 shadow-md ${
         data.isError
-          ? "border-red-200 bg-red-50 text-red-800"
-          : "border-gray-200 bg-white text-gray-800"
+          ? "border-red-200 bg-red-50 text-red-800 dark:border-red-900/70 dark:bg-red-950/40 dark:text-red-200"
+          : "border-gray-200 bg-white text-gray-800 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
       }`}
     >
       <div className="mb-3 flex items-center justify-between gap-4">
-        <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+        <div className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-slate-400">
           Assistant
         </div>
         <div className="relative">
           <button
             onClick={handleCopy}
-            className="flex items-center gap-1 text-gray-500 transition-colors hover:text-gray-700"
+            className="flex items-center gap-1 text-gray-500 transition-colors hover:text-gray-700 dark:text-slate-400 dark:hover:text-slate-100"
             type="button"
             aria-label="Copy assistant response"
           >
@@ -66,21 +66,21 @@ const ShowResults = ({ data }) => {
         <div
           className={`prose prose-indigo max-w-none text-sm leading-6 ${
             sources.length > 0 ? "mb-5" : ""
-          }`}
+          } dark:text-slate-100`}
           dangerouslySetInnerHTML={{ __html: data.content || '' }}
         />
       </div>
 
       {sources.length > 0 && (
-        <div className="rounded-xl border border-amber-200 bg-amber-50 p-3">
-          <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-amber-800">
+        <div className="rounded-xl border border-amber-200 bg-amber-50 p-3 dark:border-amber-900/70 dark:bg-amber-950/30">
+          <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-amber-800 dark:text-amber-200">
             Sources for this answer
           </h3>
           <ul className="space-y-3">
             {sources.map((source, index) => (
               <li
                 key={`${source.document_name}-${index}`}
-                className="flex items-start rounded-lg border border-amber-100 bg-white p-3"
+                className="flex items-start rounded-lg border border-amber-100 bg-white p-3 dark:border-amber-900/60 dark:bg-slate-950"
               >
                 {source.thumbnail_url && (
                   <img
@@ -90,14 +90,14 @@ const ShowResults = ({ data }) => {
                   />
                 )}
                 <div>
-                  <h4 className="font-semibold text-gray-800">{source.document_name}</h4>
+                  <h4 className="font-semibold text-gray-800 dark:text-slate-100">{source.document_name}</h4>
                   {source.score !== undefined && (
-                    <p className="mb-2 text-xs text-gray-500">
+                    <p className="mb-2 text-xs text-gray-500 dark:text-slate-400">
                       Score: {source.score}
                     </p>
                   )}
                   {source.paragraph && (
-                    <p className="mb-2 text-sm text-gray-700">{source.paragraph}</p>
+                    <p className="mb-2 text-sm text-gray-700 dark:text-slate-300">{source.paragraph}</p>
                   )}
                   <a
                     href={source.document_url}
